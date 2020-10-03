@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DataAccess.Infrastructure
 {
-    public class DataAccessConfiguration
+    public static class DataAccessConfiguration
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
