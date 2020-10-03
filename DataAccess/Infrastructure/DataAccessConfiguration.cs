@@ -17,9 +17,10 @@ namespace DataAccess.Infrastructure
             services.AddTransient(typeof(SignRepository));
             services.AddTransient(typeof(ApplicationRepository));
             services.AddTransient(typeof(UserRepository));
-          
-            //services.AddDbContext<VacationsContext>(option =>
-                //option.UseSqlServer(configuration.GetConnectionString("defaultConnection")));
+
+            services.AddDbContext<VacationsContext>(option =>
+                option.UseSqlServer(configuration.GetConnectionString("defaultConnection"))); // add to web appsettings "connectionStrings": {
+            //"defaultConnection": "Data Source=SQL5080.site4now.net;Initial Catalog=DB_A685D8_Test;User Id=DB_A685D8_Test_admin;Password=qwerty123456"},
 
         }
     }

@@ -25,7 +25,7 @@ namespace DataAccess.UnitOfWork
 
         public void Dispose()
         {
-            _context?.Dispose();
+            _context?.DisposeAsync();
         }
 
         public async Task SaveChangesAsync()

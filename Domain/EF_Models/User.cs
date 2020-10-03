@@ -6,6 +6,7 @@ namespace Domain.EF_Models
 {
     public class User//:IdentityUser
     {
+        public Guid Id { get; set; } //remove after adding Identity
         public User()
         {
             Applications = new List<Application>();
