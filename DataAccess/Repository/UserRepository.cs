@@ -11,23 +11,44 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
-    public class UserRepository:BaseRepository<User>
+    public class UserRepository: IRepository<User>
     {
-        public UserRepository(VacationsContext context) : base(context) { }
-        public override async Task<IReadOnlyCollection<User>> GetAllAsync()
+        private TimeOffTrackerContext _context { get; set; }
+        public UserRepository(TimeOffTrackerContext context)
         {
-            return await this.Entities.ToListAsync();
+            _context = context;
         }
 
-        public override async Task<IReadOnlyCollection<User>> FindAllByConditionAsync(Expression<Func<User, bool>> predicat)
+        public async Task CreateAsync(User entity)
         {
-            return await this.Entities.Where(predicat).ToListAsync();
+            await _context.Users.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public override async Task<User> FindByConditionAsync(Expression<Func<User, bool>> predicat)
+        public async Task DeleteAsync(Guid id)
         {
-            return await this.Entities.Where(predicat).FirstOrDefaultAsync();
+            _context.Users.Remove(await _context.Users.FindAsync(id));
+            await _context.SaveChangesAsync();
         }
 
+        public async Task<IReadOnlyCollection<User>> FilterAsync(Expression<Func<User, bool>> predicate)
+        {
+            return await _context.Users.Where(predicate).ToListAsync();
+        }
+
+        public async Task<User> FindAsync(Expression<Func<User, bool>> predicate)
+        {
+            return await _context.Users.FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<User> FindAsync(Guid id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<IReadOnlyCollection<User>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
     }
 }

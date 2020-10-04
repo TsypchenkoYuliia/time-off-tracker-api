@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{37C25094-E80D-4E61-B6FF-2D2FEBBF3FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{D2FCF450-7360-4938-A7DD-332A73838A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{D2FCF450-7360-4938-A7DD-332A73838A08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiModels", "ApiModels\ApiModels.csproj", "{0C4966BD-4D94-42D4-A355-733117D66FFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D2FCF450-7360-4938-A7DD-332A73838A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2FCF450-7360-4938-A7DD-332A73838A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2FCF450-7360-4938-A7DD-332A73838A08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,8 +10,10 @@ namespace DataAccess.Repository.Interfaces
     public interface IRepository<TEntity>
     {
         Task<IReadOnlyCollection<TEntity>> GetAllAsync();
-        Task<IReadOnlyCollection<TEntity>> FindAllByConditionAsync(Expression<Func<TEntity, bool>> predicat);
-        Task<TEntity> FindByConditionAsync(Expression<Func<TEntity, bool>> predicat);
-        Task<OperationDetails> CreateAsync(TEntity entity);
+        Task<IReadOnlyCollection<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task CreateAsync(TEntity entity);
+        Task<TEntity> FindAsync(Guid id);
+        Task DeleteAsync(Guid id);
     }
 }

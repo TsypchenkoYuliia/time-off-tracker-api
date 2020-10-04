@@ -14,11 +14,11 @@ namespace DataAccess.Infrastructure
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddTransient(typeof(SignRepository));
-            services.AddTransient(typeof(ApplicationRepository));
+            services.AddTransient(typeof(TimeOffRequestRepository));
+            services.AddTransient(typeof(TimeOffRequestReviewRepository));
             services.AddTransient(typeof(UserRepository));
 
-            services.AddDbContext<VacationsContext>(option =>
+            services.AddDbContext<TimeOffTrackerContext>(option =>
                 option.UseSqlServer(configuration.GetConnectionString("defaultConnection"))); // add to web appsettings "connectionStrings": {
             //"defaultConnection": "Data Source=SQL5080.site4now.net;Initial Catalog=DB_A685D8_Test;User Id=DB_A685D8_Test_admin;Password=qwerty123456"},
 
