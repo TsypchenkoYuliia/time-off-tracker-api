@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TimeOffTracker.WebApi.Filters;
 
 namespace TimeOffTracker.WebApi
 {
@@ -22,6 +23,8 @@ namespace TimeOffTracker.WebApi
             {
                 mvcOtions.EnableEndpointRouting = false;
             });
+
+            services.AddScoped<ExceptionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
