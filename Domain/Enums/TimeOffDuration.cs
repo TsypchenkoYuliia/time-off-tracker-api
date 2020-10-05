@@ -6,6 +6,7 @@ namespace Domain.Enums
 {
     public enum TimeOffDuration : int
     {
-
+        HalfDay = 1,
+        FullDay = 2
     }
 }

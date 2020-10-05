@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.EF_Models
+namespace ApiModels.Models
 {
-    public class TimeOffRequestReview
+    public class TimeOffRequestReviewApiModel
     {
         public int Id { get; set; }
-        public User Reviewer { get; set; }
+        public UserApiModel Reviewer { get; set; }
         public int ReviewerId { get; set; }
         public bool IsApproved { get; set; }
-        public TimeOffRequest Request { get; set; }
+        public TimeOffRequestApiModel Request { get; set; }
         public int RequestId { get; set; }
     }
 }

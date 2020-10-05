@@ -11,44 +11,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
-    public class UserRepository: IRepository<User>
+    public class UserRepository: BaseRepository<User, int>
     {
-        private TimeOffTrackerContext _context { get; set; }
-        public UserRepository(TimeOffTrackerContext context)
-        {
-            _context = context;
-        }
-
-        public async Task CreateAsync(User entity)
-        {
-            await _context.Users.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            _context.Users.Remove(await _context.Users.FindAsync(id));
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<IReadOnlyCollection<User>> FilterAsync(Expression<Func<User, bool>> predicate)
-        {
-            return await _context.Users.Where(predicate).ToListAsync();
-        }
-
-        public async Task<User> FindAsync(Expression<Func<User, bool>> predicate)
-        {
-            return await _context.Users.FirstOrDefaultAsync(predicate);
-        }
-
-        public async Task<User> FindAsync(Guid id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
-
-        public async Task<IReadOnlyCollection<User>> GetAllAsync()
-        {
-            return await _context.Users.ToListAsync();
-        }
+        public UserRepository(TimeOffTrackerContext context) : base(context) { }
     }
 }

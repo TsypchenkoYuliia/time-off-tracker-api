@@ -1,5 +1,7 @@
 ﻿using DataAccess.Context;
 using DataAccess.Repository;
+using DataAccess.Repository.Interfaces;
+using Domain.EF_Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

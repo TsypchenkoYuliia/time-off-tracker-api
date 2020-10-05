@@ -12,13 +12,12 @@ namespace Domain.EF_Models
         {
             Reviews = new List<TimeOffRequestReview>();
         }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public TimeOffType Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ICollection<TimeOffRequestReview> Reviews { get; set; }
         public bool HasAccountingReviewPassed { get; set; }
-        public bool IsFullDay { get; set; } //(sick) Full day or not
         public string Comment { get; set; }
         public string ProjectRole { get; set; }
         public VacationRequestState State { get; set; }

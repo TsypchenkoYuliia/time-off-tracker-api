@@ -6,9 +6,9 @@ namespace Domain.Enums
 {
     public enum VacationRequestState : int
     {
-        None,
-        Inprogress,
-        Approved,
-        Rejected
+        New = 1,
+        InProgress = 2,
+        Approved = 3,
+        Rejected = 4
     }
 }

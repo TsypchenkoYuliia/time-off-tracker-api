@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository.Interfaces
 {
-    public interface IRepository<TEntity>
+    public interface IRepository<TEntity, TKey>
     {
         Task<IReadOnlyCollection<TEntity>> GetAllAsync();
         Task<IReadOnlyCollection<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task CreateAsync(TEntity entity);
-        Task<TEntity> FindAsync(Guid id);
-        Task DeleteAsync(Guid id);
+        Task<TEntity> FindAsync(TKey id);
+        Task DeleteAsync(TKey id);
+        Task UpdateAsync(TEntity entity);
     }
 }

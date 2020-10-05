@@ -11,44 +11,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
-    public class TimeOffRequestRepository : IRepository<TimeOffRequest>
+    public class TimeOffRequestRepository : BaseRepository<TimeOffRequest, int>
     {
-        private TimeOffTrackerContext _context { get; set; }
-        public TimeOffRequestRepository(TimeOffTrackerContext context)
-        {
-            _context = context;
-        }
-
-        public async Task CreateAsync(TimeOffRequest entity)
-        {
-            await _context.TimeOffRequests.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            _context.TimeOffRequests.Remove(await _context.TimeOffRequests.FindAsync(id));
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<IReadOnlyCollection<TimeOffRequest>> FilterAsync(Expression<Func<TimeOffRequest, bool>> predicate)
-        {
-            return await _context.TimeOffRequests.Where(predicate).ToListAsync();
-        }
-
-        public async Task<TimeOffRequest> FindAsync(Expression<Func<TimeOffRequest, bool>> predicate)
-        {
-            return await _context.TimeOffRequests.FirstOrDefaultAsync(predicate);
-        }
-
-        public async Task<TimeOffRequest> FindAsync(Guid id)
-        {
-            return await _context.TimeOffRequests.FindAsync(id);
-        }
-
-        public async Task<IReadOnlyCollection<TimeOffRequest>> GetAllAsync()
-        {
-            return await _context.TimeOffRequests.ToListAsync();
-        }
+        public TimeOffRequestRepository(TimeOffTrackerContext context) : base(context) { }
     }
 }

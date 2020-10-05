@@ -6,14 +6,12 @@ namespace Domain.EF_Models
 {
     public class User//:IdentityUser
     {
-        public Guid Id { get; set; } //remove after adding Identity
+        public int Id { get; set; } //remove after adding Identity
         public User()
         {
-            Applications = new List<TimeOffRequest>();
-            Signs = new List<TimeOffRequestReview>();
+            Requests = new List<TimeOffRequest>();
         }
         public string Position { get; set; }
-        public ICollection<TimeOffRequest> Applications { get; set; }
-        public ICollection<TimeOffRequestReview> Signs { get; set; }
+        public ICollection<TimeOffRequest> Requests { get; set; }
     }
 }
