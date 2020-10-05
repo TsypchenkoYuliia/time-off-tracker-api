@@ -18,7 +18,10 @@ namespace Time_off_tracker_WEB
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(mvcOtions =>
+            {
+                mvcOtions.EnableEndpointRouting = false;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -32,10 +35,10 @@ namespace Time_off_tracker_WEB
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //CORS setting
+            app.UseCors();
+
+            app.UseMvc();
         }
     }
 }
