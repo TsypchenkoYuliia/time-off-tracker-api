@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Time_off_tracker_WEB
+namespace TimeOffTracker.WebApi
 {
     public class Program
     {

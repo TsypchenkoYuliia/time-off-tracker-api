@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Time_off_tracker_WEB
+namespace TimeOffTracker.WebApi
 {
     public class Startup
     {
@@ -36,7 +36,10 @@ namespace Time_off_tracker_WEB
             app.UseRouting();
 
             //CORS setting
-            app.UseCors();
+            app.UseCors(builder => builder.AllowAnyOrigin());
+            //.WithOrigins(<front address>)
+            //.AllowAnyMethod()
+            //.AllowCredentials()
 
             app.UseMvc();
         }
