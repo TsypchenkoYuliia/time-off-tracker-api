@@ -1,3 +1,4 @@
+using BusinessLogic.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,8 @@ namespace TimeOffTracker.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            BusinessConfiguration.ConfigureServices(services, Configuration);
+
             services.AddControllers(mvcOtions =>
             {
                 mvcOtions.EnableEndpointRouting = false;

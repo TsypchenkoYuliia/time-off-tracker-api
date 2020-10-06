@@ -21,9 +21,7 @@ namespace DataAccess.Infrastructure
             services.AddTransient(typeof(UserRepository));
 
             services.AddDbContext<TimeOffTrackerContext>(option =>
-                option.UseSqlServer(configuration.GetConnectionString("defaultConnection"))); // add to web appsettings "connectionStrings": {
-            //"defaultConnection": "Data Source=SQL5080.site4now.net;Initial Catalog=DB_A685D8_Test;User Id=DB_A685D8_Test_admin;Password=qwerty123456"},
-
+                option.UseSqlServer(configuration.GetConnectionString("defaultConnection"))); 
         }
     }
 }
