@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{D2FCF450-7360-4938-A7DD-332A73838A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiModels", "ApiModels\ApiModels.csproj", "{0C4966BD-4D94-42D4-A355-733117D66FFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiModels", "ApiModels\ApiModels.csproj", "{0C4966BD-4D94-42D4-A355-733117D66FFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeOffTracker.WebApi", "TimeOffTracker.WebApi\TimeOffTracker.WebApi.csproj", "{A5327B7F-B361-42D7-AC8C-36E61EF2EDBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C4966BD-4D94-42D4-A355-733117D66FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5327B7F-B361-42D7-AC8C-36E61EF2EDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5327B7F-B361-42D7-AC8C-36E61EF2EDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5327B7F-B361-42D7-AC8C-36E61EF2EDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5327B7F-B361-42D7-AC8C-36E61EF2EDBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
