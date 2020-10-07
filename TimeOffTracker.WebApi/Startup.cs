@@ -21,6 +21,7 @@ namespace TimeOffTracker.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             BusinessConfiguration.ConfigureServices(services, Configuration);
+            BusinessConfiguration.ConfigureIdentityInicializerAsync(services.BuildServiceProvider());
 
             services.AddControllers(mvcOtions =>
             {
@@ -40,6 +41,14 @@ namespace TimeOffTracker.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             //CORS setting
             app.UseCors(builder => builder.AllowAnyOrigin());

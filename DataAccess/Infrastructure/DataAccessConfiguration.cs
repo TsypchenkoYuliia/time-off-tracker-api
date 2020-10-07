@@ -2,6 +2,7 @@
 using DataAccess.Repository;
 using DataAccess.Repository.Interfaces;
 using Domain.EF_Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,11 @@ namespace DataAccess.Infrastructure
             services.AddTransient(typeof(UserRepository));
 
             services.AddDbContext<TimeOffTrackerContext>(option =>
-                option.UseSqlServer(configuration.GetConnectionString("defaultConnection"))); 
+                option.UseSqlServer(configuration.GetConnectionString("defaultConnection")));
+
+            services.AddIdentity<User, IdentityRole>()
+               .AddEntityFrameworkStores<TimeOffTrackerContext>()
+               .AddDefaultTokenProviders();
         }
     }
 }
