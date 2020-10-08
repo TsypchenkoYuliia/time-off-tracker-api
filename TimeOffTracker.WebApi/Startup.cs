@@ -1,10 +1,16 @@
 using BusinessLogic.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TimeOffTracker.WebApi.AuthHelpers;
 using TimeOffTracker.WebApi.Filters;
+using TimeOffTracker.WebApi.Infrastructure;
+using TimeOffTracker.WebApi.Services;
 
 namespace TimeOffTracker.WebApi
 {
@@ -23,10 +29,14 @@ namespace TimeOffTracker.WebApi
             BusinessConfiguration.ConfigureServices(services, Configuration);
             BusinessConfiguration.ConfigureIdentityInicializerAsync(services.BuildServiceProvider());
 
+            JwtConfiguration.Configure(services, Configuration);
+
             services.AddControllers(mvcOtions =>
             {
                 mvcOtions.EnableEndpointRouting = false;
             });
+
+            services.AddScoped(typeof(UserService));
 
             services.AddScoped<ExceptionFilter>();
         }
