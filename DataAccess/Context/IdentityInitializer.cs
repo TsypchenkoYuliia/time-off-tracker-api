@@ -1,4 +1,5 @@
-﻿using Domain.EF_Models;
+﻿using DataAccess.Static.Context;
+using Domain.EF_Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace DataAccess.Context
         }
         public async Task SeedAsync()
         {
-            await _roleManager.CreateAsync(new IdentityRole("MANAGER"));
-            await _roleManager.CreateAsync(new IdentityRole("ACCOUNTANT"));
-            await _roleManager.CreateAsync(new IdentityRole("EMPLOYEE"));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.manager));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.accountant));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.employee));
 
             var login = "mainadmin@mail.ru";
             var pass = "mainadmin89M#";
@@ -33,13 +34,13 @@ namespace DataAccess.Context
 
                 if (saveuser.Succeeded)
                 {
-                    if ((await _roleManager.FindByNameAsync("admin")) == null)
+                    if ((await _roleManager.FindByNameAsync("Admin")) == null)
                     {
-                        var saverole = await _roleManager.CreateAsync(new IdentityRole("admin"));
+                        var saverole = await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
                         if (saverole.Succeeded)
                         {
-                            await _userManager.AddToRoleAsync(user, "admin");
+                            await _userManager.AddToRoleAsync(user, "Admin");
                         }
                     }
                 }

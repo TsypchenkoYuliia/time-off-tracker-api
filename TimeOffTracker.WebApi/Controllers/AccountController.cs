@@ -18,13 +18,11 @@ namespace TimeOffTracker.WebApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
+        public AccountController(UserManager<User> userManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
         }
 
@@ -40,10 +38,7 @@ namespace TimeOffTracker.WebApi.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
-                    {
-                        await _userManager.AddToRoleAsync(user, (Enum.GetValues(typeof(Roles)).GetValue(model.Role-1)).ToString());
-                        await _signInManager.SignInAsync(user, false);
-                    }
+                        await _userManager.AddToRoleAsync(user, (Enum.GetValues(typeof(Roles)).GetValue(model.Role)).ToString());
                     else
                     {
                         _logger.LogError("InternalServerError");

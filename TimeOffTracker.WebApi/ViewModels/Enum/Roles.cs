@@ -7,8 +7,8 @@ namespace TimeOffTracker.WebApi.ViewModels.Enum
 {
     public enum Roles:int
     {
-        EMPLOYEE = 1,
-        ACCOUNTANT = 2,
-        MANAGER = 3
+        Employee = 0,
+        Accountant = 1,
+        Manager = 2
     }
 }
