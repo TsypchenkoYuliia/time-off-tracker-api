@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using TimeOffTracker.WebApi.ViewModels;
 
 namespace TimeOffTracker.WebApi.Controllers
 {
@@ -37,29 +38,29 @@ namespace TimeOffTracker.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> SetUserRole(string userId, string role) 
+        public async Task<ActionResult<User>> SetUserRole([FromForm] RoleChangeModel model)
         {
-            User user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
+            User user = await _userManager.FindByIdAsync(model.UserId);
+
+            if (user == null)
+                throw new RoleChangeException($"Cannot find user with Id: {model.UserId}");
+            if (_roleManager.FindByNameAsync(model.Role).Result == null)
+                throw new RoleChangeException($"Role does not exist: {model.Role}");
+            if (model.Role == "admin")
+                throw new RoleChangeException("Сannot manually set role: admin");
+            try
             {
-                try
+                var userRole = await _userManager.GetRolesAsync(user);
+
+                if (userRole.FirstOrDefault() != model.Role)
                 {
-                    var userRole = await _userManager.GetRolesAsync(user);
-
-                    await _userManager.AddToRoleAsync(user, role);
-
+                    await _userManager.AddToRoleAsync(user, model.Role);
                     await _userManager.RemoveFromRolesAsync(user, userRole);
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Cannot change user role: {UserId}", userId);
-                    return Conflict();
-                }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogError("User not found! UserId: {Id}", userId);
-                return NotFound();
+                throw new RoleChangeException(ex.Message);
             }
 
             return Ok(user);
