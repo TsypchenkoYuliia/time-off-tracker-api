@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Static.Context;
 using Domain.EF_Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -26,8 +30,15 @@ namespace TimeOffTracker.WebApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _userManager.Users.ToList();
+        }
+
         [HttpPost]
-        public async Task<ActionResult<string>> Post([FromForm] RegisterViewModel model)
+        [Authorize(Roles = "Admin")]
+        public async Task<HttpStatusCode> Post([FromForm] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +51,7 @@ namespace TimeOffTracker.WebApi.Controllers
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(user, model.Role);
-                        return Ok(user.Id);
+                        return HttpStatusCode.OK;
                     }
 
                     StringBuilder sb = new StringBuilder();

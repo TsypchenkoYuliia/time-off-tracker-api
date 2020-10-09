@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Static.Context;
 using Domain.EF_Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace TimeOffTracker.WebApi.Controllers
 {
     [ApiController]
     [Route("auth/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : BaseController
     {
         private readonly UserManager<User> _userManager;

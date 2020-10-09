@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace TimeOffTracker.WebApi.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("auth/[controller]")]
     public class LoginController : BaseController
     {
@@ -19,7 +20,6 @@ namespace TimeOffTracker.WebApi.Controllers
             _logger = logger;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult Login([FromForm]AuthenticateModel model)
         {
