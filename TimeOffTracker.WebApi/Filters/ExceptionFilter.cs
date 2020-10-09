@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace TimeOffTracker.WebApi.Filters
 {
@@ -20,9 +22,10 @@ namespace TimeOffTracker.WebApi.Filters
 
             string exceptionStack = context.Exception.StackTrace;
             string exceptionMessage = context.Exception.Message;
-            context.Result = new ContentResult
+            context.Result = new ContentResult()
             {
-                Content = $"An exception was thrown in the {actionName} method: \n {exceptionMessage} \n {exceptionStack}"
+                Content = $"An exception was thrown in the method: {actionName}\n {exceptionMessage} \n {exceptionStack}",
+                StatusCode = 400
             };
             context.ExceptionHandled = true;
         }
