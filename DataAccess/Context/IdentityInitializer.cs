@@ -20,9 +20,9 @@ namespace DataAccess.Context
         }
         public async Task SeedAsync()
         {
-            await _roleManager.CreateAsync(new IdentityRole("Manager"));
-            await _roleManager.CreateAsync(new IdentityRole("Accountant"));
-            await _roleManager.CreateAsync(new IdentityRole("Employee"));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.manager));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.accountant));
+            await _roleManager.CreateAsync(new IdentityRole(RoleName.employee));
 
             var login = "mainadmin@mail.ru";
             var pass = "mainadmin89M#";
@@ -34,13 +34,13 @@ namespace DataAccess.Context
 
                 if (saveuser.Succeeded)
                 {
-                    if ((await _roleManager.FindByNameAsync("Admin")) == null)
+                    if ((await _roleManager.FindByNameAsync(RoleName.admin)) == null)
                     {
-                        var saverole = await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                        var saverole = await _roleManager.CreateAsync(new IdentityRole(RoleName.admin));
 
                         if (saverole.Succeeded)
                         {
-                            await _userManager.AddToRoleAsync(user, "Admin");
+                            await _userManager.AddToRoleAsync(user, RoleName.admin);
                         }
                     }
                 }

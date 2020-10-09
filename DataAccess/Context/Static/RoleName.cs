@@ -9,5 +9,6 @@ namespace DataAccess.Static.Context
         public static string manager = "Manager";
         public static string accountant = "Accountant";
         public static string employee = "Employee";
+        public static string admin = "Admin";
     }
 }
