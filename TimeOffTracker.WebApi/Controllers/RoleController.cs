@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.EF_Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +27,10 @@ namespace TimeOffTracker.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<IdentityRole> GetAllRoles()
+        public IEnumerable<string> GetAllRoles()
         {
-            IEnumerable<IdentityRole> allRoles = _roleManager.Roles.AsNoTracking()
-                   .Where(role => role.NormalizedName != "ADMIN")
+            IEnumerable<string> allRoles = _roleManager.Roles.AsNoTracking()
+                   .Select(role => role.Name).Where(roleName => roleName != "ADMIN")
                    .ToList();
 
             return allRoles;
@@ -46,8 +45,8 @@ namespace TimeOffTracker.WebApi.Controllers
                 throw new RoleChangeException($"Cannot find user with Id: {model.UserId}");
             if (_roleManager.FindByNameAsync(model.Role).Result == null)
                 throw new RoleChangeException($"Role does not exist: {model.Role}");
-            if (model.Role == "admin")
-                throw new RoleChangeException("Сannot manually set role: admin");
+            if (model.Role == "Admin")
+                throw new RoleChangeException("Сannot manually set role: Admin");
             try
             {
                 var userRole = await _userManager.GetRolesAsync(user);
