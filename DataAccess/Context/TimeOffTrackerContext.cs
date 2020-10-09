@@ -1,4 +1,5 @@
 ﻿using Domain.EF_Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace DataAccess.Context
 {
-    public class TimeOffTrackerContext:DbContext
+    public class TimeOffTrackerContext:IdentityDbContext<User>
     {
         public TimeOffTrackerContext(DbContextOptions<TimeOffTrackerContext> options) : base(options)
         {
@@ -14,7 +15,6 @@ namespace DataAccess.Context
         }
 
         public DbSet<TimeOffRequest> TimeOffRequests { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<TimeOffRequestReview> TimeOffRequestReviews { get; set; }
     }
 }

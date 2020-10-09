@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Domain.EF_Models
 {
-    public class User//:IdentityUser
+    public class User : IdentityUser
     {
-        public int Id { get; set; } //remove after adding Identity
         public User()
         {
             Requests = new List<TimeOffRequest>();
