@@ -23,14 +23,14 @@ namespace TimeOffTracker.WebApi.Controllers
         [HttpPost]
         public IActionResult Login([FromForm]AuthenticateModel model)
         {
-            string token = _userService.Authenticate(model.Username, model.Password);
+            LoggedInUserModel userWithJWT = _userService.Authenticate(model.Username, model.Password);
 
-            if (token == null)
+            if (userWithJWT == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             _logger.LogInformation("Login succes. User: {User}", model.Username);
 
-            return Ok(token);
+            return Ok(userWithJWT);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.EF_Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -24,7 +25,7 @@ namespace TimeOffTracker.WebApi.Services
             _appSettings = appSettings.Value;
         }
 
-        public string Authenticate(string username, string password)
+        public LoggedInUserModel Authenticate(string username, string password)
         {
             User user = _userManager.FindByNameAsync(username).Result;
             if (user == null || !_userManager.CheckPasswordAsync(user, password).Result)
@@ -37,15 +38,22 @@ namespace TimeOffTracker.WebApi.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Id),
                     new Claim(ClaimTypes.Role, userRole)
                 }),
                 Expires = DateTime.UtcNow.AddHours(_appSettings.TokenExpiresTimeHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            
-            return tokenHandler.WriteToken(token);
+
+            LoggedInUserModel userWithToken = new LoggedInUserModel()
+            {
+                UserId = user.Id,
+                Role = userRole,
+                Token = tokenHandler.WriteToken(token)
+            };
+
+            return userWithToken;
         }
     }
 }
