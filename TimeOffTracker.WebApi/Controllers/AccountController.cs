@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TimeOffTracker.WebApi.ViewModels;
-using TimeOffTracker.WebApi.ViewModels.Enum;
 
 namespace TimeOffTracker.WebApi.Controllers
 {
@@ -38,7 +37,7 @@ namespace TimeOffTracker.WebApi.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
-                        await _userManager.AddToRoleAsync(user, (Enum.GetValues(typeof(Roles)).GetValue(model.Role)).ToString());
+                        await _userManager.AddToRoleAsync(user, model.Role);
                     else
                     {
                         _logger.LogError("InternalServerError");

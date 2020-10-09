@@ -20,9 +20,9 @@ namespace DataAccess.Context
         }
         public async Task SeedAsync()
         {
-            await _roleManager.CreateAsync(new IdentityRole(RoleName.manager));
-            await _roleManager.CreateAsync(new IdentityRole(RoleName.accountant));
-            await _roleManager.CreateAsync(new IdentityRole(RoleName.employee));
+            await _roleManager.CreateAsync(new IdentityRole("Manager"));
+            await _roleManager.CreateAsync(new IdentityRole("Accountant"));
+            await _roleManager.CreateAsync(new IdentityRole("Employee"));
 
             var login = "mainadmin@mail.ru";
             var pass = "mainadmin89M#";
