@@ -24,7 +24,7 @@ namespace TimeOffTracker.WebApi.Filters
             string exceptionMessage = context.Exception.Message;
             context.Result = new ContentResult()
             {
-                Content = $"An exception was thrown in the method: {actionName}\n {exceptionMessage} \n {exceptionStack}",
+                Content = exceptionMessage,
                 StatusCode = 400
             };
             context.ExceptionHandled = true;

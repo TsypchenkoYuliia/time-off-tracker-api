@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.Static.Context;
 using Domain.EF_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,8 +46,6 @@ namespace TimeOffTracker.WebApi.Controllers
                 throw new RoleChangeException($"Cannot find user with Id: {model.UserId}");
             if (_roleManager.FindByNameAsync(model.Role).Result == null)
                 throw new RoleChangeException($"Role does not exist: {model.Role}");
-            if (model.Role == "Admin")
-                throw new RoleChangeException("Сannot manually set role: Admin");
             try
             {
                 var userRole = await _userManager.GetRolesAsync(user);

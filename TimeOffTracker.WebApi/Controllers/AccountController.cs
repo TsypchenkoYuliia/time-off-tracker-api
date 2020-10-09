@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Domain.EF_Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
+using TimeOffTracker.WebApi.Exceptions;
 using TimeOffTracker.WebApi.ViewModels;
 
 namespace TimeOffTracker.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("auth/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly UserManager<User> _userManager;
         private ILogger<AccountController> _logger;
@@ -26,7 +27,7 @@ namespace TimeOffTracker.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpStatusCode> Post([FromForm] RegisterViewModel model)
+        public async Task<ActionResult<string>> Post([FromForm] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -37,20 +38,26 @@ namespace TimeOffTracker.WebApi.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
-                        await _userManager.AddToRoleAsync(user, model.Role);
-                    else
                     {
-                        _logger.LogError("InternalServerError");
-                        return HttpStatusCode.InternalServerError;
+                        await _userManager.AddToRoleAsync(user, model.Role);
+                        return Ok(user.Id);
                     }
+
+                    StringBuilder sb = new StringBuilder();
+                    foreach (IdentityError err in result.Errors)
+                    {
+                        sb.Append(err.Description).Append(";");
+                    }
+                    throw new Exception(sb.ToString());
+
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex.Message);
+                    throw new UserCreateException(ex.Message);
                 }
-
             }
-            return HttpStatusCode.OK;
+            else
+                throw new UserCreateException("Invalid user data");
         }
     }
 }
