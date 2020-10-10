@@ -11,7 +11,6 @@ namespace Domain.EF_Models
         {
             Requests = new List<TimeOffRequest>();
         }
-        public string Position { get; set; }
         public ICollection<TimeOffRequest> Requests { get; set; }
     }
 }
