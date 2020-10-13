@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>TimeOffTracker.WebApi</RootNamespace>
+    <StartupObject>TimeOffTracker.WebApi.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
