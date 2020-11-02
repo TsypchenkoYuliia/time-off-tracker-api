@@ -1,42 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ApiModels.Models;
+using AutoMapper;
 using DataAccess.Static.Context;
 using Domain.EF_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using TimeOffTracker.WebApi.Exceptions;
 using TimeOffTracker.WebApi.ViewModels;
 
 namespace TimeOffTracker.WebApi.Controllers
 {
-    [Route("auth/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-    public class AccountController : BaseController
+    [Route("[controller]")]
+    [Authorize(Roles = RoleName.admin)]
+    public class AccountsController : BaseController
     {
         private readonly UserManager<User> _userManager;
-        private ILogger<AccountController> _logger;
+        private readonly IMapper _mapper;
+        private ILogger<AccountsController> _logger;
 
-        public AccountController(UserManager<User> userManager, ILogger<AccountController> logger)
+        public AccountsController(UserManager<User> userManager, IMapper mapper, ILogger<AccountsController> logger)
         {
+            _mapper = mapper;
             _userManager = userManager;
             _logger = logger;
         }
 
         [HttpPost]
-        public async Task<HttpStatusCode> Post([FromForm] RegisterViewModel model)
+        public async Task<IActionResult> Post([FromBody] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
+                User user = _mapper.Map<User>(model);
 
                 try
                 {
@@ -45,7 +45,9 @@ namespace TimeOffTracker.WebApi.Controllers
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(user, model.Role);
-                        return HttpStatusCode.OK;
+                        
+                        _logger.LogInformation("Account created successfully:\n{User}, {UserId}", user.UserName, user.Id);
+                        return Ok(_mapper.Map<UserApiModel>(user));
                     }
 
                     StringBuilder sb = new StringBuilder();
@@ -58,6 +60,11 @@ namespace TimeOffTracker.WebApi.Controllers
                 }
                 catch (Exception ex)
                 {
+                    User exUser = await _userManager.FindByNameAsync(user.UserName);
+                    if ( exUser != null)
+                        if (!_userManager.GetRolesAsync(exUser).Result.Any())
+                            await _userManager.DeleteAsync(user);
+
                     throw new UserCreateException(ex.Message);
                 }
             }
